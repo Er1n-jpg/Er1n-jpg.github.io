@@ -1,13 +1,16 @@
-
-.Blahaj{
+.container {
   color: blue;
-  H1 {
-  font-size: 128px;
+  text-align: center;
+  font-size: 35px;
 }
-  H4{
-    font-size: 30px;
-  }
-}
+
 body{
-  background-color: #c6efe4;
+  background-color: #CBC3E3;
+}
+
+a{
+  font-size: 33px;
+  background: #B1000D;
+  color: white;
+  box-shadow: 0 0 50px red;
 }
