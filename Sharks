@@ -1,3 +1,20 @@
+<head>
+<style>  
+.Blahaj{
+  color: blue;
+  H1 {
+  font-size: 128px;
+}
+  H4{
+    font-size: 30px;
+  }
+}
+body{
+  background-color: #c6efe4;
+}
+</style>
+</head>
+
 <body>
   <H1>Hello world<H1>
     <H6>hihi<H6>
