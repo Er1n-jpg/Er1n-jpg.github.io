@@ -11,8 +11,11 @@ function addGifToScreen(gifSrc) {
     }
 
     const img = document.createElement("img");
-    img.src = gifSrc;
-    console.log("🖼️ GIF src set to:", img.src);
+    console.log("🖼️ Created img element:", img);
+
+    console.log("🖼️ GIF src before setting:", gifSrc);
+    img.src = gifSrc; // This is the problematic line
+    console.log("🖼️ GIF src after setting:", img.src);
 
     // Calculate random position & size
     const maxWidth = window.innerWidth - 200;
