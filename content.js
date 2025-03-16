@@ -1,6 +1,6 @@
 console.log("✅ Content script loaded!");
 
-// Listen for message from background script with GIF data
+// Listen for the message from the background script with GIF data
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action === "injectGifs") {
         // For each GIF, generate a random position

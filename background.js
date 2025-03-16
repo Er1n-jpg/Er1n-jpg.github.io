@@ -10,6 +10,8 @@ let gifList = [
     "gifs/sillyguy-uiia.gif"
 ];
 
+
+// Store GIFs globally across tabs
 let gifData = [];
 
 // When a new tab is created, add a random GIF
@@ -20,9 +22,10 @@ chrome.tabs.onCreated.addListener(() => {
     });
 });
 
-// When tab is updated, inject GIFs into the page
+// When tab is updated (completed loading), inject GIFs into the page
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === "complete") {
+        // Ensure we inject the GIFs after tab has finished loading
         chrome.scripting.executeScript({
             target: { tabId: tabId },
             func: injectPersistentGifs
@@ -30,16 +33,12 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
 });
 
-// Inject the stored GIFs into the page
+// Function to inject the stored GIFs into the page
 function injectPersistentGifs() {
-    chrome.storage.local.get(["gifData"], function(result) {
-        const storedGifs = result.gifData || [];
-
-        // Send the stored GIF data to the content script
-        chrome.runtime.sendMessage({
-            action: "injectGifs",
-            gifs: storedGifs
-        });
+    // Send the stored GIF data to the content script
+    chrome.runtime.sendMessage({
+        action: "injectGifs",
+        gifs: gifData
     });
 }
 
