@@ -13,11 +13,8 @@ function addGifToScreen(gifSrc) {
     const img = document.createElement("img");
     console.log("🖼️ Created img element:", img);
 
-    // Hardcode a valid GIF URL for testing
-    const testUrl = chrome.runtime.getURL("gifs/sillyguy-seal.gif");
-    console.log("🖼️ Hardcoded GIF URL:", testUrl);
-
-    img.src = testUrl; // Use the hardcoded URL
+    console.log("🖼️ GIF src before setting:", gifSrc);
+    img.src = gifSrc; // This is the problematic line
     console.log("🖼️ GIF src after setting:", img.src);
 
     // Calculate random position & size
