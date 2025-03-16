@@ -1,37 +1,23 @@
 {
     "manifest_version": 3,
-    "name": "Image Overlay",
+    "name": "Persistent Random GIFs",
     "version": "1.0",
-    "description": "silly guys that pop up every time you open a tab!!",
-    "permissions": ["storage","tabs"],
+    "description": "Shows random GIFs across the entire Chrome window.",
+    "permissions": ["storage", "tabs"],
     "background": {
         "service_worker": "background.js"
     },
-    "host_permissions": [
-        "<all_urls>"
-    ],
-    "chrome_url_overrides": {
-        "newtab": "content.html"
-    },
     "content_scripts": [
         {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "content.js"
-            ],
+            "matches": ["<all_urls>", "chrome://newtab/"],
+            "js": ["content.js"],
             "run_at": "document_idle"
         }
     ],
     "web_accessible_resources": [
         {
-            "resources": [
-                "gifs/*.gif"
-            ],
-            "matches": [
-                "<all_urls>"
-            ]
+            "resources": ["gifs/*.gif"],
+            "matches": ["<all_urls>"]
         }
     ]
 }
