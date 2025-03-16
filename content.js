@@ -1,10 +1,6 @@
-console.log("✅ Content script loaded!");
-
-// Wait for the document to be ready
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ DOM fully loaded!");
 
-    // Check if the overlay already exists
     if (!document.getElementById("gif-overlay")) {
         const gifOverlay = document.createElement("div");
         gifOverlay.id = "gif-overlay";
@@ -16,18 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
         gifOverlay.style.pointerEvents = "none";
         gifOverlay.style.zIndex = "999999";
         document.body.appendChild(gifOverlay);
-
         console.log("✅ GIF overlay created!");
-
-        // Load stored GIFs and display them
-        chrome.storage.local.get(["gifs"], (data) => {
-            let gifList = data.gifs || [];
-            gifList.forEach(addGifToScreen);
-        });
     }
+
+    chrome.storage.local.get(["gifs"], (data) => {
+        let gifList = data.gifs || [];
+        gifList.forEach(addGifToScreen);
+    });
 });
 
-// Function to display a GIF on screen
+// Function to display a GIF with random position & size
 function addGifToScreen(gifData) {
     const gifOverlay = document.getElementById("gif-overlay");
     if (!gifOverlay) {
@@ -37,10 +31,14 @@ function addGifToScreen(gifData) {
 
     const img = document.createElement("img");
     img.src = chrome.runtime.getURL(gifData.src);
+
+    // Calculate random position & size inside `content.js`
+    const maxWidth = window.innerWidth - 200;
+    const maxHeight = window.innerHeight - 200;
     img.style.position = "absolute";
-    img.style.left = `${gifData.left}px`;
-    img.style.top = `${gifData.top}px`;
-    img.style.width = `${gifData.size}px`;
+    img.style.left = `${Math.random() * maxWidth}px`;
+    img.style.top = `${Math.random() * maxHeight}px`;
+    img.style.width = `${Math.random() * 100 + 100}px`;
     img.style.zIndex = "9999";
 
     gifOverlay.appendChild(img);
