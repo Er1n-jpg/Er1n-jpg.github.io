@@ -24,8 +24,8 @@ function createGifElement(url, top, left) {
 // Function to add a new random GIF
 function addRandomGif() {
   const randomIndex = Math.floor(Math.random() * gifUrls.length);
-  const randomTop = Math.random() * (window.innerHeight - 200);
-  const randomLeft = Math.random() * (window.innerWidth - 200);
+  const randomTop = Math.random() * (window.innerHeight - 150);
+  const randomLeft = Math.random() * (window.innerWidth - 100);
   const gifUrl = chrome.runtime.getURL(gifUrls[randomIndex]);
 
   // Send the new GIF to the background script
