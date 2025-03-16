@@ -1,9 +1,9 @@
 {
     "manifest_version": 3,
-    "name": "Persistent Random GIFs",
+    "name": "Persistent GIFs",
     "version": "1.0",
-    "description": "Shows random GIFs that stay across all tabs.",
-    "permissions": ["tabs", "storage", "activeTab", "scripting"],
+    "description": "GIFs persist forever across all tabs until Chrome is closed.",
+    "permissions": ["storage", "activeTab", "scripting"],
     "host_permissions": ["<all_urls>"],
     "background": {
         "service_worker": "background.js"
@@ -12,7 +12,7 @@
         {
             "matches": ["https://*/*", "http://*/*"],
             "js": ["content.js"],
-            "run_at": "document_start"
+            "run_at": "document_idle"
         }
     ],
     "web_accessible_resources": [
