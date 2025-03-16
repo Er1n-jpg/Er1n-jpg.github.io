@@ -1,16 +1,16 @@
-
-
 chrome.tabs.onCreated.addListener(() => {
+    console.log("✅ New tab opened!");
+
     chrome.storage.local.get(["gifs"], (data) => {
         let gifList = data.gifs || [];
         let newGif = getRandomGif();
 
-        // Store new GIF in local storage
         gifList.push(newGif);
-        chrome.storage.local.set({ gifs: gifList });
+        chrome.storage.local.set({ gifs: gifList }, () => {
+            console.log("✅ Stored new GIF:", newGif);
+        });
     });
 });
-
 // Function to get a random GIF
 function getRandomGif() {
     const gifList = [
