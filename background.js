@@ -12,7 +12,10 @@ const gifList = [
 
 // Function to get a random GIF
 function getRandomGif() {
-    return chrome.runtime.getURL("gifs/sillyguy-panda.gif"); // Test with one GIF
+    const randomIndex = Math.floor(Math.random() * gifList.length);
+    return {
+        src = gifList[randomIndex]
+    };
 }
 
 // Listen for new tab creation
@@ -27,4 +30,20 @@ chrome.tabs.onCreated.addListener((tab) => {
     chrome.storage.local.set({ [gifKey]: newGif }, () => {
         console.log("✅ Stored new GIF:", newGif);
     });
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === "complete" && /^https?:/.test(tab.url)) {
+        const gifKey = `gif_${Date.now()}`;
+            const newGif = getRandomGif();
+
+            // Save the new GIF to storage
+        chrome.storage.local.set({ [gifKey]: newGif }, () => {
+            console.log("✅ Stored new GIF:", newGif);
+        });
+        chrome.scripting.executeScript({
+            target: { tabId: tabId },
+            files: ["content.js"]
+        });
+    }
 });
