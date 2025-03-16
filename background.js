@@ -1,16 +1,3 @@
-chrome.tabs.onCreated.addListener(() => {
-    console.log("✅ New tab opened!");
-
-    chrome.storage.local.get(["gifs"], (data) => {
-        let gifList = data.gifs || [];
-        let newGif = getRandomGif();
-
-        gifList.push(newGif);
-        chrome.storage.local.set({ gifs: gifList }, () => {
-            console.log("✅ Stored new GIF:", newGif);
-        });
-    });
-});
 // Function to get a random GIF
 function getRandomGif() {
     const gifList = [
@@ -29,3 +16,18 @@ function getRandomGif() {
         src: gifList[Math.floor(Math.random() * gifList.length)]
     };
 }
+
+chrome.tabs.onCreated.addListener(() => {
+    console.log("✅ New tab opened!");
+
+    chrome.storage.local.get(["gifs"], (data) => {
+        let gifList = data.gifs || [];
+        let newGif = getRandomGif();
+
+        gifList.push(newGif);
+        chrome.storage.local.set({ gifs: gifList }, () => {
+            console.log("✅ Stored new GIF:", newGif);
+        });
+    });
+});
+
