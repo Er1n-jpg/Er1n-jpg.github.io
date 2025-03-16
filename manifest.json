@@ -3,7 +3,7 @@
     "name": "Image Overlay",
     "version": "1.0",
     "description": "silly guys that pop up every time you open a tab!!",
-    "permissions": [],
+    "permissions": ["storage"],
     "host_permissions": [
         "<all_urls>"
     ],
@@ -24,7 +24,7 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "uh.png"
+                "gifs/*.gif"
             ],
             "matches": [
                 "<all_urls>"
