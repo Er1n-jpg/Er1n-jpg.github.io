@@ -1,7 +1,7 @@
 console.log("✅ content.js is running!");
 
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("✅ DOM fully loaded!");
+function init() {
+    console.log("✅ DOM fully loaded or already loaded!");
 
     if (!document.getElementById("gif-overlay")) {
         const gifOverlay = document.createElement("div");
@@ -22,7 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
         let gifList = data.gifs || [];
         gifList.forEach(addGifToScreen);
     });
-});
+}
+
+// Check if the DOM is already loaded
+if (document.readyState === "loading") {
+    // DOM is still loading, wait for the event
+    document.addEventListener("DOMContentLoaded", init);
+} else {
+    // DOM is already loaded, run the script immediately
+    init();
+}
 
 function addGifToScreen(gifData) {
     const gifOverlay = document.getElementById("gif-overlay");
