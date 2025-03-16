@@ -12,8 +12,7 @@ const gifList = [
 
 // Function to get a random GIF
 function getRandomGif() {
-    const randomIndex = Math.floor(Math.random() * gifList.length);
-    return gifList[randomIndex];
+    return chrome.runtime.getURL("gifs/sillyguy-seal.gif"); // Test with one GIF
 }
 
 // Listen for new tab creation
