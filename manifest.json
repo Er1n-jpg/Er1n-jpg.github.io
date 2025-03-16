@@ -1,24 +1,34 @@
 {
     "manifest_version": 3,
-    "name": "silly",
+    "name": "Image Overlay",
     "version": "1.0",
-    "description": "silly guys that pop up every time you open a tab!!", 
-    "action": {
-        "default_popup": "popup.html"
-    }, 
-    "permissions": [
-        "storage"
+    "description": "silly guys that pop up every time you open a tab!!",
+    "permissions": [],
+    "host_permissions": [
+        "<all_urls>"
     ],
-    "icons": { "16": "icon16.png",
-            "32": "icon32.png",
-           "48": "icon48.png",
-          "128": "icon128.png" }, 
-    "content-scripts": [
+    "chrome_url_overrides": {
+        "newtab": "content.html"
+    },
+    "content_scripts": [
         {
-            "matches": ["<all-urls>"],
-            "html": ["content.html"],
-            "css": ["content.css"],
-            "js": ["content.js"]
-        } 
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "uh.png"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
     ]
-  }
+}
