@@ -2,22 +2,23 @@
     "manifest_version": 3,
     "name": "Persistent Random GIFs",
     "version": "1.0",
-    "description": "Shows random GIFs that stay across all tabs.",
-    "permissions": ["tabs", "storage", "activeTab", "scripting"],
-    "host_permissions": ["<all_urls>"],
+    "description": "Displays random GIFs that persist across pages and tabs.",
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
     "background": {
         "service_worker": "background.js"
     },
     "content_scripts": [
         {
-            "matches": ["https://*/*", "http://*/*"],
-            "js": ["content.js"],
-            "run_at": "document_start"
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
         }
     ],
     "web_accessible_resources": [
         {
-            "resources": ["gifs/*.gif"],
+            "resources": ["*.gif"],
             "matches": ["<all_urls>"]
         }
     ]
