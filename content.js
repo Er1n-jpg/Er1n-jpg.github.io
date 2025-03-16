@@ -4,11 +4,11 @@ const gifList = [
     "gifs/sillyguy-kfcbucket.gif",
     "gifs/sillyguy-diluc.gif",
     "gifs/sillyguy-cat.gif",
-    "gifs/sillyguys-panda.gif",
-    "gifs/sillyguys-seal.gif",
-    "gifs/sillyguys-shark.gif",
-    "gifs/sillyguys-toast.gif",
-    "gifs/sillyguys-uiia.gif"
+    "gifs/sillyguy-panda.gif",
+    "gifs/sillyguy-seal.gif",
+    "gifs/sillyguy-shark.gif",
+    "gifs/sillyguy-toast.gif",
+    "gifs/sillyguy-uiia.gif"
 ];
 
 function injectImage() {
