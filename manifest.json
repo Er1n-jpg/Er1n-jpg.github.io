@@ -1,19 +1,32 @@
 {
     "manifest_version": 3,
-    "name": "Persistent Random GIFs",
+    "name": "silly",
     "version": "1.0",
-    "description": "Displays random GIFs that persist across pages and tabs.",
+    "description": "silly guys that pop up every time you open a tab!!", 
+    "action": {
+        "default_popup": "popup.html"
+    }, 
     "permissions": [
-        "storage",
-        "tabs"
+        "storage", "scripting", "activeTab", "tabs"
+ ],
+    "host_permissions": [
+        "<all_urls>"
     ],
+    "icons": { "16": "icon16.png",
+            "32": "icon32.png",
+           "48": "icon48.png",
+          "128": "icon128.png" 
+        },
+         
     "background": {
         "service_worker": "background.js"
     },
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["content.js"]
+            "html": ["overlay.html"],
+            "js": ["overlay.js"],
+            "all_frames": true
         }
     ],
     "web_accessible_resources": [
