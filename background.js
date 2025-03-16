@@ -10,32 +10,17 @@ let gifList = [
     "gifs/sillyguy-uiia.gif"
 ];
 
-// Store GIFs and their random positions globally (for the entire window)
 let gifData = [];
 
-function generateRandomGifData() {
+// When a new tab is created, add a random GIF
+chrome.tabs.onCreated.addListener(() => {
     const randomGif = gifList[Math.floor(Math.random() * gifList.length)];
-    const maxWidth = window.innerWidth - 200; // Avoid overflow
-    const maxHeight = window.innerHeight - 200;
-
-    const gif = {
+    gifData.push({
         src: chrome.runtime.getURL(randomGif),
-        left: Math.random() * maxWidth + "px",
-        top: Math.random() * maxHeight + "px",
-        width: `${Math.random() * 100 + 100}px` // Random width between 100px and 200px
-    };
-
-    return gif;
-}
-
-// On window creation (new tab)
-chrome.tabs.onCreated.addListener((tab) => {
-    // Store GIF data across all tabs in the window
-    const newGif = generateRandomGifData();
-    gifData.push(newGif);
+    });
 });
 
-// On tab update (reload or new tab opened)
+// When tab is updated, inject GIFs into the page
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status === "complete") {
         chrome.scripting.executeScript({
@@ -45,22 +30,15 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     }
 });
 
-// Function to inject all stored GIFs into the page
+// Inject the stored GIFs into the page
 function injectPersistentGifs() {
     chrome.storage.local.get(["gifData"], function(result) {
         const storedGifs = result.gifData || [];
 
-        storedGifs.forEach(gif => {
-            let img = document.createElement("img");
-            img.src = gif.src;
-            img.style.position = "fixed";
-            img.style.left = gif.left;
-            img.style.top = gif.top;
-            img.style.width = gif.width;
-            img.style.zIndex = "9999";
-            img.style.border = "3px solid black";
-            img.style.borderRadius = "10px";
-            document.body.appendChild(img);
+        // Send the stored GIF data to the content script
+        chrome.runtime.sendMessage({
+            action: "injectGifs",
+            gifs: storedGifs
         });
     });
 }
