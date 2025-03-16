@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gifOverlay.style.width = "100vw";
         gifOverlay.style.height = "100vh";
         gifOverlay.style.pointerEvents = "none";
-        gifOverlay.style.zIndex = "999999";
+        gifOverlay.style.zIndex = "9999";
         document.body.appendChild(gifOverlay);
         console.log("✅ GIF overlay created!");
     }
