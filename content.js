@@ -41,7 +41,7 @@ function addGifToScreen(gifData) {
     }
 
     const img = document.createElement("img");
-    img.src = chrome.runtime.getURL(gifData.src);
+    img.src = chrome.runtime.getURL(gifData.src); // Use chrome.runtime.getURL
 
     const maxWidth = window.innerWidth - 200;
     const maxHeight = window.innerHeight - 200;
