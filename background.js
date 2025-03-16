@@ -14,7 +14,7 @@ const gifList = [
 function getRandomGif() {
     const randomIndex = Math.floor(Math.random() * gifList.length);
     return {
-        src = gifList[randomIndex]
+        src: gifList[randomIndex]
     };
 }
 
