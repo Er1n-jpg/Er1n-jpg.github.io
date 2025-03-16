@@ -3,7 +3,10 @@
     "name": "Image Overlay",
     "version": "1.0",
     "description": "silly guys that pop up every time you open a tab!!",
-    "permissions": ["storage"],
+    "permissions": ["storage","tabs"],
+    "background": {
+        "service_worker": "background.js"
+    },
     "host_permissions": [
         "<all_urls>"
     ],
