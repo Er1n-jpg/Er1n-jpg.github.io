@@ -41,9 +41,5 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         chrome.storage.local.set({ [gifKey]: newGif }, () => {
             console.log("✅ Stored new GIF:", newGif);
         });
-        chrome.scripting.executeScript({
-            target: { tabId: tabId },
-            files: ["content.js"]
-        });
     }
 });
