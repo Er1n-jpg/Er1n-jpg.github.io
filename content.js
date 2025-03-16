@@ -9,7 +9,7 @@ function addGifToScreen(gifSrc) {
     }
 
     const img = document.createElement("img");
-    img.src = chrome.runtime.getURL(gifSrc);
+    img.src = gifSrc;
 
     // Calculate random position & size
     const maxWidth = window.innerWidth - 200; // Ensure the GIF stays within the screen
