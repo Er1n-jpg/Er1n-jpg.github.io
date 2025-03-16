@@ -12,7 +12,7 @@ const gifList = [
 
 // Function to get a random GIF
 function getRandomGif() {
-    return chrome.runtime.getURL("gifs/sillyguy-seal.gif"); // Test with one GIF
+    return chrome.runtime.getURL("gifs/sillyguy-panda.gif"); // Test with one GIF
 }
 
 // Listen for new tab creation
