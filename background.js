@@ -13,26 +13,19 @@ const gifList = [
 // Function to get a random GIF
 function getRandomGif() {
     const randomIndex = Math.floor(Math.random() * gifList.length);
-    return {
-        src: gifList[randomIndex]
-    };
+    return gifList[randomIndex];
 }
 
 // Listen for new tab creation
 chrome.tabs.onCreated.addListener((tab) => {
     console.log("✅ New tab opened! Tab ID:", tab.id);
 
-    // Retrieve the current list of GIFs
-    chrome.storage.local.get(["gifs"], (data) => {
-        const gifList = data.gifs || [];
-        const newGif = getRandomGif();
+    // Generate a unique key for the new GIF
+    const gifKey = `gif_${Date.now()}`;
+    const newGif = getRandomGif();
 
-        // Add the new GIF to the list
-        gifList.push(newGif);
-
-        // Save the updated list back to storage
-        chrome.storage.local.set({ gifs: gifList }, () => {
-            console.log("✅ Stored new GIF:", newGif);
-        });
+    // Save the new GIF to storage
+    chrome.storage.local.set({ [gifKey]: newGif }, () => {
+        console.log("✅ Stored new GIF:", newGif);
     });
 });

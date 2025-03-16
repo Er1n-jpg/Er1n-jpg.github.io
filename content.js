@@ -1,7 +1,7 @@
 console.log("✅ content.js is running!");
 
 // Function to display a GIF with random position & size
-function addGifToScreen(gifData) {
+function addGifToScreen(gifSrc) {
     const gifOverlay = document.getElementById("gif-overlay");
     if (!gifOverlay) {
         console.error("🚨 GIF overlay not found!");
@@ -9,7 +9,7 @@ function addGifToScreen(gifData) {
     }
 
     const img = document.createElement("img");
-    img.src = chrome.runtime.getURL(gifData.src);
+    img.src = chrome.runtime.getURL(gifSrc);
 
     // Calculate random position & size
     const maxWidth = window.innerWidth - 200; // Ensure the GIF stays within the screen
@@ -39,9 +39,12 @@ if (!document.getElementById("gif-overlay")) {
     console.log("✅ GIF overlay created!");
 }
 
-// Retrieve GIFs from storage and display them
-chrome.storage.local.get(["gifs"], (data) => {
-    const gifList = data.gifs || [];
-    console.log("✅ Retrieved GIFs from storage:", gifList);
-    gifList.forEach(addGifToScreen);
+// Retrieve all GIFs from storage and display them
+chrome.storage.local.get(null, (data) => {
+    console.log("✅ Retrieved GIFs from storage:", data);
+    for (const key in data) {
+        if (key.startsWith("gif_")) {
+            addGifToScreen(data[key]);
+        }
+    }
 });
