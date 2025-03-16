@@ -1,26 +1,52 @@
 console.log("✅ Content script loaded!");
 
-// Listen for the message from the background script with GIF data
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.action === "injectGifs") {
-        // For each GIF, generate a random position
-        request.gifs.forEach(gif => {
-            const img = document.createElement("img");
-            img.src = gif.src;
+// Prevent multiple overlays from being created
+if (document.getElementById("gif-overlay")) {
+    console.log("🚨 GIF overlay already exists, skipping...");
+} else {
+    // Create a persistent overlay for GIFs
+    const gifOverlay = document.createElement("div");
+    gifOverlay.id = "gif-overlay";
+    gifOverlay.style.position = "fixed";
+    gifOverlay.style.top = "0";
+    gifOverlay.style.left = "0";
+    gifOverlay.style.width = "100vw";
+    gifOverlay.style.height = "100vh";
+    gifOverlay.style.pointerEvents = "none"; // Prevents interference with page clicks
+    gifOverlay.style.zIndex = "999999";
+    document.body.appendChild(gifOverlay);
 
-            // Get random position for the GIF
-            const maxWidth = window.innerWidth - 200; // Avoid overflow
-            const maxHeight = window.innerHeight - 200;
-            img.style.position = "fixed";
-            img.style.left = `${Math.random() * maxWidth}px`;
-            img.style.top = `${Math.random() * maxHeight}px`;
-            img.style.width = `${Math.random() * 100 + 100}px`; // Random size between 100px and 200px
-            img.style.zIndex = "9999";
-            img.style.border = "3px solid black";
-            img.style.borderRadius = "10px";
+    console.log("✅ GIF overlay created!");
 
-            document.body.appendChild(img); // Add GIF to the page
-            console.log("✅ Injected GIF:", gif.src);
-        });
+    let gifList = [
+        "gifs/sillyguy-seal.gif",
+        "gifs/sillyguy-kfcbucket.gif",
+        "gifs/sillyguy-diluc.gif",
+        "gifs/sillyguy-cat.gif",
+        "gifs/sillyguy-panda.gif",
+        "gifs/sillyguy-seal.gif",
+        "gifs/sillyguy-shark.gif",
+        "gifs/sillyguy-toast.gif",
+        "gifs/sillyguy-uiia.gif"
+    ];
+
+    function addRandomGif() {
+        const img = document.createElement("img");
+        img.src = chrome.runtime.getURL(gifList[Math.floor(Math.random() * gifList.length)]);
+
+        // Random size and position
+        const maxWidth = window.innerWidth - 200;
+        const maxHeight = window.innerHeight - 200;
+        img.style.position = "absolute";
+        img.style.left = `${Math.random() * maxWidth}px`;
+        img.style.top = `${Math.random() * maxHeight}px`;
+        img.style.width = `${Math.random() * 100 + 100}px`;
+        img.style.zIndex = "9999";
+
+        gifOverlay.appendChild(img);
+        console.log("✅ Added GIF:", img.src);
     }
-});
+
+    // Add a new GIF every time a new tab is opened
+    addRandomGif();
+}

@@ -2,14 +2,19 @@
     "manifest_version": 3,
     "name": "Persistent Random GIFs",
     "version": "1.0",
-    "description": "Shows random GIFs across the entire Chrome window.",
-    "permissions": ["storage", "tabs"],
+    "description": "Shows random GIFs that stay across all tabs.",
+    "permissions": ["tabs", "storage", "activeTab", "scripting"],
+    "host_permissions": ["<all_urls>"],
     "background": {
         "service_worker": "background.js"
     },
-    "chrome_url_overrides": {
-        "newtab": "newtab.html"
-    },
+    "content_scripts": [
+        {
+            "matches": ["https://*/*", "http://*/*"],
+            "js": ["content.js"],
+            "run_at": "document_start"
+        }
+    ],
     "web_accessible_resources": [
         {
             "resources": ["gifs/*.gif"],
